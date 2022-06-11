@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.graduation.dao.CommentDao">
+    <insert id="comment" >
+        INSERT INTO
+            comment
+        VALUES
+            (null,#{comment},#{timestamp},#{question},0,0,#{userid},#{pictures},#{type},#{nickName},#{avatar},0)
+    </insert>
+    <update id="commentLike" >
+        update comment set likeNumber = likeNumber + 1 where id = #{id}
+    </update>
+    <update id="commentLikeCancel" >
+        update comment set likeNumber = likeNumber - 1 where id = #{id}
+    </update>
+    <update id="commentDislike" >
+        update comment set dislikeNumber = dislikeNumber + 1 where id = #{id}
+    </update>
+    <update id="commentDislikeCancel" >
+        update comment set dislikeNumber = dislikeNumber - 1 where id = #{id}
+    </update>
+    <select id="getAllComment" resultType="com.graduation.entity.Question">
+        select id,likeNumber,comment from comment where type = -1
+    </select>
+    <select id="getQuestion" resultType="com.graduation.entity.Question">
+        select id,likeNumber,comment from comment where id = #{id}
+    </select>
+    <select id="getCommentPage" resultType="com.graduation.entity.Comment">
+        select * from comment where question = #{question} order by id desc limit #{a},3
+    </select>
+    <select id="getCommentPageByLike" resultType="com.graduation.entity.Comment">
+        select * from comment where question = #{question} order by likeNumber desc limit #{a},3
+    </select>
+    <select id="getRandomComment" resultType="com.graduation.entity.Comment">
+        select * from comment where isShow = 1 order by RAND() limit #{pagesize}
+    </select>
+    <select id="getSonComment" resultType="com.graduation.entity.Comment">
+        select * from comment where question = #{fatherId} and type = 1 order by id desc limit #{a},#{b}
+    </select>
+    <select id="getCommentCount" resultType="com.graduation.entity.Comment">
+        select * from comment where question = #{id}
+    </select>
+    <select id="getSonCommentCount" resultType="com.graduation.entity.Comment">
+        select * from comment where question = #{id} and type = 1
+    </select>
+    <select id="getComment" resultType="com.graduation.entity.Comment">
+        select * from comment where id = #{question}
+    </select>
+    <update id="commentShowAdd" >
+        update comment set isShow = 1 where id = #{id}
+    </update>
+    <update id="commentShowDelete" >
+        update comment set isShow = 0 where id = #{id}
+    </update>
+</mapper>

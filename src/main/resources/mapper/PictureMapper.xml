@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.graduation.dao.PictureDao">
+    <update id="updatePicture">
+    update picture set array = #{array} ,state = #{state} where id = #{picture}
+    </update>
+    <select id="getState" resultType="int">
+        select id from picture where state>0 order by id limit 1
+    </select>
+    <select id="getPicture" resultType="com.graduation.entity.Picture">
+        select * from picture where id = #{id}
+    </select>
+
+</mapper>
