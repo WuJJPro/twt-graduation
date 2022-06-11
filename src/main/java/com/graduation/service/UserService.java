@@ -15,8 +15,8 @@ public class UserService {
     UserDao userDao;
     public User getUser(String id){
         User user = userDao.getUser(id);
-        if(user!=null){
-        user.setlike();}
+        user.setLike(userDao.getLike(id));
+        user.setDislike(userDao.getDislike(id));
         return user;
     }
     public void createUser(String id){
@@ -25,32 +25,21 @@ public class UserService {
     public void addTapNumber(String userid,int number){
         userDao.addTapNumber(userid,number);
     }
-    public void updateLike(String content,int flag,int comment,String userid){
-        List<Integer> likes = JSONArray.parseArray(content, Integer.class);
-        if(flag==1)likes.add(comment);
-        else {
-            for (int i = 0; i < likes.size(); i++) {
-                if (likes.get(i).equals(comment)) {
-                    likes.remove(i);
-                }
-
-            }
+    public void updateLike(int flag,String userid,int id){
+        if(flag==1){
+            userDao.addLike(userid,id);
         }
-        String arrayJson = JSON.toJSONString(likes);
-        userDao.updateLike(arrayJson,userid);
+        else {
+            userDao.deleteLike(userid,id);
+        }
     }
-    public void updatedisLike(String content,int flag,int comment,String userid){
-        List<Integer> likes = JSONArray.parseArray(content, Integer.class);
-        if(flag==1)likes.add(comment);
-        else {
-            for (int i = 0; i < likes.size(); i++) {
-                if (likes.get(i).equals(comment)) {
-                    likes.remove(i);
-                }
+    public void updatedisLike(int flag,String userid,int id){
 
-            }
+        if(flag==1){
+            userDao.addDislike(userid,id);
         }
-        String arrayJson = JSON.toJSONString(likes);
-        userDao.updatedisLike(arrayJson,userid);
+        else {
+            userDao.deleteDislike(userid,id);
+        }
     }
 }

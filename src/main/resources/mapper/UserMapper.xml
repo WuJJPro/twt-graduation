@@ -7,17 +7,29 @@
         select * from user where id = #{id}
     </select>
     <insert id="createUser">
-        insert ignore into user values(#{id},"[]","[]",0)
+        insert ignore into user values(#{id},0)
     </insert>
     <update id="addTapNumber">
         update user set TapNumber = TapNumber+#{number} where id = #{userid}
     </update>
-    <update id="updateLike">
-        update user set likeList = #{content} where id = #{userid}
-    </update>
-    <update id="updatedisLike">
-        update user set dislikeList = #{content} where id = #{userid}
-    </update>
+    <insert id="addLike">
+        insert into userLike values(#{userid},#{id})
+    </insert>
+    <delete id="deleteLike">
+        delete from userLike where userid = #{userid} and id = #{id}
+    </delete>
+    <insert id="addDislike">
+        insert into userDislike values(#{userid},#{id})
+    </insert>
+    <delete id="deleteDislike">
+        delete from userDislike where userid = #{userid} and id = #{id}
+    </delete>
+    <select id="getLike" resultType="int">
+        select id from userLike where userid = #{userid}
+    </select>
+    <select id="getDislike" resultType="int">
+        select id from userDislike where userid = #{userid}
+    </select>
 
 
 </mapper>

@@ -41,15 +41,13 @@ public class CommentController {
     @GetMapping("api/comment/like")
     public JsonResult<String> commentLike(int flag,int id,@RequestHeader("token") String userid){
         commentService.commentLike(flag,id);
-        String like = userService.getUser(userid).getLikeList();
-        userService.updateLike(like,flag,id,userid);
+        userService.updateLike(flag,userid,id);
         return new JsonResult<>("ok");
     }
     @GetMapping("api/comment/dislike")
     public JsonResult<String> commentDislike(int flag,int id,@RequestHeader("token") String userid){
         commentService.commentDislike(flag,id);
-        String like = userService.getUser(userid).getDislikeList();
-        userService.updatedisLike(like,flag,id,userid);
+        userService.updatedisLike(flag,userid,id);
         return new JsonResult<>("ok");
     }
     @GetMapping("api/comment/get")

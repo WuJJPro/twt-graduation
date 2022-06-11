@@ -15,9 +15,4 @@ public class User {
   private int tapNumber;
   private int[] like;
   private int[] dislike;
-
-  public void setlike() {
-    like = JSON.parseObject(likeList, int[].class);
-    dislike = JSON.parseObject(dislikeList, int[].class);
-  }
 }
